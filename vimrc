@@ -284,3 +284,20 @@ function! s:HighlightLongLines(width)
         echomsg "Usage: HighlightLongLines [natural number]"
     endif
 endfunction
+
+# teamoe
+set nu
+"autocmd FileType javascript source ~/.vim/js.vim 
+let g:CSApprox_verbose_level = 0
+"Show Git branch in statusline
+set statusline+=%{GitBranch()}
+
+nmap <silent> <Leader>p :NERDTreeToggle<CR>
+
+if has("gui_running")
+  colorscheme vibrantink
+  set guifont=Monaco\ 9
+else
+  let g:CSApprox_loaded = 1
+  set background=dark
+endif
