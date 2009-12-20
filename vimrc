@@ -285,7 +285,7 @@ function! s:HighlightLongLines(width)
     endif
 endfunction
 
-# teamoe
+" teamoe
 set nu
 "autocmd FileType javascript source ~/.vim/js.vim 
 let g:CSApprox_verbose_level = 0
