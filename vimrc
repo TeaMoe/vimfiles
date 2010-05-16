@@ -302,4 +302,4 @@ else
   set background=dark
 endif
 
-source vimrc.local
+source ~/vimrc.local
