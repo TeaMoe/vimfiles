@@ -301,3 +301,5 @@ else
   let g:CSApprox_loaded = 1
   set background=dark
 endif
+
+source vimrc.local
