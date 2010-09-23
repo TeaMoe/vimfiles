@@ -67,6 +67,12 @@ autocmd cursorhold,bufwritepost * unlet! b:statusline_trailing_space_warning
 "return '' otherwise
 function! StatuslineTrailingSpaceWarning()
     if !exists("b:statusline_trailing_space_warning")
+
+        if !&modifiable
+            let b:statusline_trailing_space_warning = ''
+            return b:statusline_trailing_space_warning
+        endif
+
         if search('\s\+$', 'nw') != 0
             let b:statusline_trailing_space_warning = '[\s]'
         else
@@ -95,15 +101,21 @@ autocmd cursorhold,bufwritepost * unlet! b:statusline_tab_warning
 "return an empty string if everything is fine
 function! StatuslineTabWarning()
     if !exists("b:statusline_tab_warning")
+        let b:statusline_tab_warning = ''
+
+        if !&modifiable
+            return b:statusline_tab_warning
+        endif
+
         let tabs = search('^\t', 'nw') != 0
-        let spaces = search('^ ', 'nw') != 0
+
+        "find spaces that arent used as alignment in the first indent column
+        let spaces = search('^ \{' . &ts . ',}[^\t]', 'nw') != 0
 
         if tabs && spaces
             let b:statusline_tab_warning =  '[mixed-indenting]'
         elseif (spaces && !&et) || (tabs && &et)
             let b:statusline_tab_warning = '[&et]'
-        else
-            let b:statusline_tab_warning = ''
         endif
     endif
     return b:statusline_tab_warning
@@ -121,6 +133,12 @@ autocmd cursorhold,bufwritepost * unlet! b:statusline_long_line_warning
 "longest line
 function! StatuslineLongLineWarning()
     if !exists("b:statusline_long_line_warning")
+
+        if !&modifiable
+            let b:statusline_long_line_warning = ''
+            return b:statusline_long_line_warning
+        endif
+
         let long_line_lens = s:LongLines()
 
         if len(long_line_lens) > 0
@@ -166,6 +184,14 @@ function! s:Median(nums)
         return (nums[l/2] + nums[(l/2)-1]) / 2
     endif
 endfunction
+
+if v:version >= 703
+    "undo settings
+    set undodir=~/.vim/undofiles
+    set undofile
+
+    set colorcolumn=+1
+endif
 
 "indent settings
 set shiftwidth=4
@@ -265,7 +291,7 @@ vnoremap # :<C-u>call <SID>VSetSearch()<CR>??<CR>
 "dont do it when writing a commit log entry
 autocmd BufReadPost * call SetCursorPosition()
 function! SetCursorPosition()
-    if &filetype !~ 'commit\c'
+    if &filetype !~ 'svn\|commit\c'
         if line("'\"") > 0 && line("'\"") <= line("$")
             exe "normal! g`\""
             normal! zz
