@@ -9,4 +9,30 @@ let mapleader = ","
 nmap <silent> <leader>s :set spell!<CR>
 
 " Set region to British English
-set spelllang=en_us
+set spelllang=de_de
+
+set cpoptions+=$
+set wildmenu
+set sw=2
+set sts=2
+
+" automatically remove trailing whitespace before write
+function! StripTrailingWhitespace()
+  normal mZ
+  %s/\s\+$//e
+  if line("'Z") != line(".")
+    echo "Stripped whitespace\n"
+  endif
+  normal `Z
+endfunction
+autocmd BufWritePre * :call StripTrailingWhitespace()
+
+function! CompressBlankLines()
+  normal mZ
+  %s/^\n\+/\r/e
+  if line("'Z") != line(".")
+    echo "Compressed blank lines\n"
+  endif
+  normal `Z
+endfunction
+autocmd BufWritePre * :call CompressBlankLines()

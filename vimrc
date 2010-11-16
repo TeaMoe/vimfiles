@@ -316,7 +316,8 @@ set nu
 "autocmd FileType javascript source ~/.vim/js.vim 
 let g:CSApprox_verbose_level = 0
 "Show Git branch in statusline
-set statusline+=%{GitBranch()}
+"set statusline+=%{GitBranch()}
+set statusline+=%{fugitive#statusline()}
 
 nmap <silent> <Leader>p :NERDTreeToggle<CR>
 
