@@ -18,8 +18,10 @@ filetype off
   Bundle 'tpope/vim-bundler.git'
   Bundle 'tpope/vim-rake.git'
   Bundle 'lucapette/vim-ruby-doc.git'
+  Bundle 'wgibbs/vim-irblack.git'
+  Bundle 'fgarcia/agtd.git'
 "" " vim-scripts repos
-"" Bundle 'L9'
+  Bundle 'utl.vim'
 "" Bundle 'FuzzyFinder'
 "" " non github repos
 "" Bundle 'git://git.wincent.com/command-t.git'
